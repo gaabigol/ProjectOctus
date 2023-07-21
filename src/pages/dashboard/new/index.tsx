@@ -3,10 +3,21 @@ import { Container } from "../../../components/container"
 import { PainelHeader } from '../../../components/painelheader/index';
 import { FormEvent, useState } from "react";
 
+interface FormData {
+  title: string;
+  price: number;
+  discountPercentage: number;
+  rating: number;
+  stock: number;
+  brand: string;
+  category: string;
+  thumbnail: string;
+  description: string;
+}
 
 
 export function NewProduct() {
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<FormData>({
     title: "",
     price: 0,
     discountPercentage: 0,
