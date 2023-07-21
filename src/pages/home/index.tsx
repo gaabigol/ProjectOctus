@@ -26,8 +26,9 @@ export function Home() {
   function getProducts() {
     fetch('https://dummyjson.com/products')
       .then((res) => res.json())
-      .then((data: Product[]) => {
-        setProducts(data);
+      .then((data: { products: Product[] }) => {
+        //console.log("Data from API:", data);
+        setProducts(data.products); 
         setLoading(false);
       })
       .catch((error) => {
@@ -35,6 +36,7 @@ export function Home() {
         setLoading(false);
       });
   }
+
 
   
   if (loading) {
