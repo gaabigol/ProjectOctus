@@ -2,19 +2,22 @@ import { Container } from "../../components/container";
 import { Link } from 'react-router-dom';
 import { FormEvent, useState } from "react";
 import { User } from "../../types/user";
+import { useNavigate } from "react-router-dom";
 
 
-
+//Criar Validação quando tiver tempo!!!
 export function Login(){
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
+    const nav = useNavigate();
 
     async function handleSubmit(e: FormEvent){
         e.preventDefault();
         try {
             const user: User = await authenticate(username, password);
-            localStorage.setItem('user', JSON.stringify(user));
+            localStorage.setItem('token', user.token);
             console.log("Usuário autenticado: ", user);
+            nav('/dashboard');
           } catch (err) {
             console.log("Erro durante a autenticação: ", err);
           }
@@ -42,15 +45,16 @@ export function Login(){
     return(
         <Container>
             <div className="w-full min-h-screen flex justify-center items-center flex-col gap-4">
-                <Link to="/" className="mb-6 max-w-sm w-full">
-                    <p className="w-full">OCTUS LLC</p>
+                <Link to="/">
+                    <p className="w-full mb-6 max-w-sm w-full items-center">OCTUS LLC</p>
                 </Link>
             
-                <form onSubmit={handleSubmit}//verificar error
+                <form onSubmit={handleSubmit}//
                     className="bg-white max-w-xl w-full rounded-lg p-4"
                     >
                     <div className="mb-3">
-                        <input 
+                        <input
+                            className="w-full border-2 rounded-md h-11 px-2"
                             placeholder="Digite o nome de usuário"            
                             type="text"
                             name="username"
@@ -61,6 +65,7 @@ export function Login(){
                    
                     <div className="mb-3">
                         <input
+                            className="w-full border-2 rounded-md h-11 px-2"
                             placeholder="Digite sua senha"            
                             type="password"
                             name="password"

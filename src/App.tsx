@@ -1,11 +1,11 @@
-import { createBrowserRouter } from "react-router-dom";
+import { createBrowserRouter, Navigate } from "react-router-dom";
 import { Login } from "./pages/login";
 import { Dashboard } from "./pages/dashboard";
 import { NewProduct } from "./pages/dashboard/new";
 import { ProductsDetais } from "./pages/products";
 import { Home } from "./pages/home";
-
-import { Layout } from "./components/layout";
+import { Layout } from "./components/layout"
+import { isAuthenticated } from './util/security'
 
 
 export const router = createBrowserRouter([
@@ -26,7 +26,7 @@ export const router = createBrowserRouter([
       }, 
       {
         path: "/dashboard",
-        element: <Dashboard/>
+        element: /*isAuthenticated() ?*/ <Dashboard /> //: <Navigate to="/login"></Navigate>
       },
       {
         path: "/dashboard/new",

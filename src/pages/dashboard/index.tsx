@@ -1,7 +1,12 @@
+import { Container } from "../../components/container";
+import { PainelHeader } from "../../components/painelheader";
+
+
+
 export function Dashboard(){
     return( 
-        <div>
-            <h1>Página que terá a lista de produtos, acessada após login para gerenciar os produtos</h1>
-        </div>
+        <Container>
+            <PainelHeader></PainelHeader>
+        </Container>
     )
 }
