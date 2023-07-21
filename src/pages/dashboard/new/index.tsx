@@ -1,8 +1,35 @@
 import { FiUpload } from "react-icons/fi";
 import { Container } from "../../../components/container"
 import { PainelHeader } from '../../../components/painelheader/index';
+import { FormEvent, useState } from "react";
+
+
 
 export function NewProduct() {
+  const [formData, setFormData] = useState({
+    title: "",
+    price: 0,
+    discountPercentage: 0,
+    rating: 0,
+    stock: 0,
+    brand: "",
+    category: "",
+    thumbnail: "",
+    description: "",
+  });
+
+   function handleSubmit(e: FormEvent){
+    e.preventDefault();
+    const response = fetch('https://dummyjson.com/products/add', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        formData
+      })
+    })
+    .then(res => res.json())
+    .then(console.log);
+  }
     return (
       <Container>
         <PainelHeader></PainelHeader>
@@ -14,19 +41,21 @@ export function NewProduct() {
               <FiUpload size={30} color="#000" />
             </div>
             <div className="cursor-pointer">
-              <input type="file" accept="image/*" className="opacity-0 cursor-pointer" />
+             <input type="file" accept="image/*" className="opacity-0 cursor-pointer" />
             </div>
           </button>
         </div>
   
         <div className="w-full bg-white p-3 rounded-lg flex flex-col sm:flex-row items-center gap-2 mt-2">
-          <form className="w-full">
+          <form className="w-full" onSubmit={handleSubmit}>
             <div className="flex flex-col sm:flex-row sm:items-center gap-4">
               <div className="mb-2">
                 <p className="mb-2 font-medium">Nome do Produto</p>
                 <input
                   type="text"
                   name="title"
+                  value={formData.title}
+                  onChange={(e) => setFormData({ ...formData, title: e.target.value })}
                   placeholder="Digite o nome do produto"
                   className="w-full sm:w-48"
                 />
@@ -36,6 +65,8 @@ export function NewProduct() {
                 <input
                   type="number"
                   name="price"
+                  value={formData.price}
+                  onChange={(e) => setFormData({ ...formData, price: parseFloat(e.target.value) })}
                   placeholder="Preço"
                   className="w-full sm:w-32"
                 />
@@ -45,6 +76,8 @@ export function NewProduct() {
                 <input
                   type="number"
                   name="discountPercentage"
+                  value={formData.discountPercentage}
+                  onChange={(e) => setFormData({ ...formData, discountPercentage: parseInt(e.target.value) })}
                   placeholder="Desconto"
                   className="w-full sm:w-32"
                 />
@@ -54,6 +87,8 @@ export function NewProduct() {
                 <input
                   type="number"
                   name="rating"
+                  value={formData.rating}
+                  onChange={(e) => setFormData({ ...formData, rating: parseFloat(e.target.value)})}
                   placeholder="Avaliação"
                   className="w-full sm:w-32"
                 />
@@ -63,6 +98,8 @@ export function NewProduct() {
                 <input
                   type="number"
                   name="stock"
+                  value={formData.stock}
+                  onChange={(e) => setFormData({ ...formData, stock: parseInt(e.target.value) })}
                   placeholder="stock"
                   className="w-full sm:w-48"
                 />
@@ -74,6 +111,8 @@ export function NewProduct() {
                 <input
                   type="text"
                   name="brand"
+                  value={formData.brand}
+                  onChange={(e) => setFormData({ ...formData, brand: e.target.value })}
                   placeholder="Marca do produto"
                   className="w-full sm:w-48"
                 />
@@ -83,6 +122,8 @@ export function NewProduct() {
                 <input
                   type="text"
                   name="category"
+                  value={formData.category}
+                  onChange={(e) => setFormData({ ...formData, category: e.target.value })}
                   placeholder="Categoria"
                   className="w-full sm:w-32"
                 />
@@ -92,6 +133,8 @@ export function NewProduct() {
                 <input
                   type="text"
                   name="thumbnail"
+                  value={formData.thumbnail}
+                  onChange={(e) => setFormData({ ...formData, thumbnail: e.target.value })}
                   placeholder="Miniatura"
                   className="w-full sm:w-32"
                 />
@@ -102,6 +145,8 @@ export function NewProduct() {
               <textarea
                 className="border-2 w-full rounded-md h-24 px-2"
                 name="description"
+                value={formData.description}
+                onChange={(e) => setFormData({ ...formData, description: e.target.value })}
                 placeholder="Digite a descrição de produto"
                 typeof="text"
               ></textarea>
