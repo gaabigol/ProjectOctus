@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { FiUser, FiLogIn} from 'react-icons/fi'
+import { FiLogIn} from 'react-icons/fi'
 
 export function Header(){
     const signed = false;
@@ -13,14 +13,8 @@ export function Header(){
                 <p>OCTUS LLC</p>
                 </Link>
 
-                { !loadingAuth && signed && (
-                    <Link to="/dashboard">
-                        <FiUser size={24} color="#000"></FiUser>
-                    </Link>
-                )}
-
                 { !loadingAuth && !signed && (
-                    <Link to="/dashboard">
+                    <Link to="/login">
                         <FiLogIn size={24} color="#000"></FiLogIn>
                     </Link>
                 )}
