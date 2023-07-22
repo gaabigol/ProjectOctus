@@ -63,6 +63,27 @@ export function Dashboard() {
       });
   }
 
+  function deleteProduct(id: number) {
+    fetch(`https://dummyjson.com/products/${id}`, {
+      method: 'DELETE',
+    })
+    .then(res => {
+      if (!res.ok) {
+        throw new Error(`HTTP error! status: ${res.status}`);
+      }
+      return res.json();
+    })
+    .then(deletedProduct => {
+      console.log("Product deleted:", deletedProduct);
+      // Atualiza o estado para remover o produto deletado
+      setProducts(products.filter(product => product.id !== id));
+    })
+    .catch(error => {
+      console.error("Error deleting product:", error);
+    });
+  }
+
+
   if (loading) {
     return <div>Loading...</div>;
   }
@@ -70,6 +91,7 @@ export function Dashboard() {
   if (!Array.isArray(products)) {
     return <div>Error: Products data is not an array.</div>;
   }
+
 
 
   return (
@@ -119,7 +141,7 @@ export function Dashboard() {
               </Link>
               <button 
                 className="bg-red-500 text-white px-2 py-1 ml-2 rounded-md"
-                
+                onClick={() => deleteProduct(product.id)}
                 >
                   Deletar
               </button>
