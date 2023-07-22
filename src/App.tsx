@@ -4,6 +4,7 @@ import { Dashboard } from "./pages/dashboard";
 import { NewProduct } from "./pages/dashboard/new";
 import { ProductsDetais } from "./pages/products";
 import { Layout } from "./components/layout"
+import { UpdateProduct } from "./pages/dashboard/productsupdate";
 
 
 export const router = createBrowserRouter([
@@ -25,6 +26,10 @@ export const router = createBrowserRouter([
       {
         path: "/new",
         element: <NewProduct/>
+      },
+      {
+        path:"/update/:productId",
+        element: <UpdateProduct/>
       }
     ]
   },

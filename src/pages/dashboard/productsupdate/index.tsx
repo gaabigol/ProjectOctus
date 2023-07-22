@@ -1,8 +1,7 @@
 import { FiUpload } from "react-icons/fi";
-import { Container } from "../../../components/container"
-import { PainelHeader } from '../../../components/painelheader/index';
 import { FormEvent, useState } from "react";
-
+import { Container } from "../../../components/container"
+import { useParams } from "react-router-dom";
 
 interface FormData {
   title: string;
@@ -16,8 +15,9 @@ interface FormData {
   description: string;
 }
 
+//página para atualizar os produtos
 
-export function NewProduct() {
+export function UpdateProduct() {
   const [formData, setFormData] = useState<FormData>({
     title: "",
     price: 0,
@@ -29,22 +29,36 @@ export function NewProduct() {
     thumbnail: "",
     description: "",
   });
+  const { productId } = useParams<{ productId: string }>();
 
-   function handleSubmit(e: FormEvent){
+
+  async function handleSubmit(e: FormEvent) {
     e.preventDefault();
-    const response = fetch('https://dummyjson.com/products/add', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        formData
-      })
-    })
-    .then(res => res.json())
-    .then(console.log);
+
+    if (!productId) {
+      console.error("Product ID is undefined");
+      return; 
+    }
+    try {
+      const response = await fetch(`https://dummyjson.com/products/${productId}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData), 
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const updatedProduct = await response.json() as FormData; 
+      console.log("Product updated:", updatedProduct);
+    } catch (error) {
+      console.error("Error updating product:", error);
+    }
   }
+
     return (
       <Container>
-        <PainelHeader></PainelHeader>
         <div className="w-full bg-white p-3 rounded-lg flex flex-col sm:flex-row items-center gap-2">
           <button
             className="border-2 w-48 rounded-lg flex items-center justify-center cursor-pointer border-dray-600 h-32 md:w-48"
@@ -78,7 +92,7 @@ export function NewProduct() {
                   type="number"
                   name="price"
                   value={formData.price}
-                  onChange={(e) => setFormData({ ...formData, price: e.target.value ? parseFloat(e.target.value) : 0 })}
+                  onChange={(e) => setFormData({ ...formData, price: parseFloat(e.target.value) })}
                   placeholder="Preço"
                   className="w-full sm:w-32"
                 />
@@ -89,7 +103,7 @@ export function NewProduct() {
                   type="number"
                   name="discountPercentage"
                   value={formData.discountPercentage}
-                  onChange={(e) => setFormData({ ...formData, discountPercentage: e.target.value ? parseFloat(e.target.value) : 0 })}
+                  onChange={(e) => setFormData({ ...formData, discountPercentage: parseInt(e.target.value) })}
                   placeholder="Desconto"
                   className="w-full sm:w-32"
                 />
@@ -100,7 +114,7 @@ export function NewProduct() {
                   type="number"
                   name="rating"
                   value={formData.rating}
-                  onChange={(e) => setFormData({ ...formData, rating: e.target.value ? parseFloat(e.target.value) : 0 })}
+                  onChange={(e) => setFormData({ ...formData, rating: parseFloat(e.target.value)})}
                   placeholder="Avaliação"
                   className="w-full sm:w-32"
                 />
@@ -111,7 +125,7 @@ export function NewProduct() {
                   type="number"
                   name="stock"
                   value={formData.stock}
-                  onChange={(e) => setFormData({ ...formData, stock: e.target.value ? parseFloat(e.target.value) : 0 })}
+                  onChange={(e) => setFormData({ ...formData, stock: parseInt(e.target.value) })}
                   placeholder="stock"
                   className="w-full sm:w-48"
                 />
@@ -164,7 +178,7 @@ export function NewProduct() {
               ></textarea>
             </div>
             <button type="submit" className="w-full rounded-md bg-zinc-900 text-white font-medium h-10">
-              Cadastrar
+              Atualizar
             </button>
           </form>
         </div>

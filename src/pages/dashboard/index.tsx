@@ -16,16 +16,20 @@ interface Product {
   thumbnail: string;
   description: string;
   images: string[];
+  isDeleted?: boolean;
 }
 
 export function Dashboard() {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
+  const [searchTerm, setSearchTerm] = useState("");
+
 
   useEffect(() => {
     getProducts();
   }, []);
 
+  //pega todos os produtos e renderiza
   function getProducts() {
     fetch('https://dummyjson.com/products')
       .then((res) => res.json())
@@ -41,7 +45,24 @@ export function Dashboard() {
   }
 
 
-  
+  function handleSearch() {
+    if (searchTerm.trim() === "") {
+      // Se o campo de busca estiver vazio, não fazemos a busca
+      return;
+    }
+    setLoading(true);
+    fetch(`https://dummyjson.com/products/search?q=${searchTerm}`)
+      .then((res) => res.json())
+      .then((data: { products: Product[] }) => {
+        setProducts(data.products);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error('Error', error);
+        setLoading(false);
+      });
+  }
+
   if (loading) {
     return <div>Loading...</div>;
   }
@@ -50,6 +71,7 @@ export function Dashboard() {
     return <div>Error: Products data is not an array.</div>;
   }
 
+
   return (
     <Container>
         <PainelHeader></PainelHeader>
@@ -57,8 +79,13 @@ export function Dashboard() {
         <input
           className="w-full border-2 rounded-lg h-9 px-3"
           placeholder="Digite o nome do produto..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
         />
-        <button className="bg-red-500 h-9 px-8 rounded-lg text-white font-medium text-lg">
+        <button 
+          className="bg-red-500 h-9 px-8 rounded-lg text-white font-medium text-lg"
+          onClick={handleSearch}
+        >
           Buscar
         </button>
       </section>
@@ -85,10 +112,22 @@ export function Dashboard() {
             <div className="w-full h-px bg-slate-200 my-2"></div>
             <div className="px-2 pb-2">
               <span className="text-black">{product.category}</span>
+              <Link to={`/update/${product.id}`}>
+                <button className="bg-blue-500 text-white px-2 py-1 ml-2 rounded-md">
+                  Atualizar
+                </button>
+              </Link>
+              <button 
+                className="bg-red-500 text-white px-2 py-1 ml-2 rounded-md"
+                
+                >
+                  Deletar
+              </button>
             </div>
           </section>
         ))}
       </main>
     </Container>
+  
   );
-}
+  }
