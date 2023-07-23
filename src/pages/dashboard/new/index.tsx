@@ -30,18 +30,18 @@ export function NewProduct() {
     description: "",
   });
 
-   function handleSubmit(e: FormEvent){
+  function handleSubmit(e: FormEvent){
     e.preventDefault();
-    const response = fetch('https://dummyjson.com/products/add', {
+    fetch('https://dummyjson.com/products/add', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        formData
-      })
+      body: JSON.stringify(formData) // Alteração aqui
     })
     .then(res => res.json())
-    .then(console.log);
+    .then(console.log)
+    .catch(error => console.error('Error:', error));
   }
+
     return (
       <Container>
         <PainelHeader></PainelHeader>
