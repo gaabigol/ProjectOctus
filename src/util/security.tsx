@@ -1,5 +1,5 @@
 import { Navigate, useLocation } from 'react-router-dom';
-import React, { ReactNode } from 'react';
+import { ReactNode } from 'react';
 
 interface PrivateRouteProps {
   children: ReactNode;
