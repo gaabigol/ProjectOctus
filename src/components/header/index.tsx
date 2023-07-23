@@ -7,7 +7,7 @@ export function Header(){
 
     const handleLogout = () => {
         localStorage.removeItem('token');
-        nav('/login');
+        nav('/');
       }
    
     return(

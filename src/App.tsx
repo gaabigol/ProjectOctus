@@ -9,7 +9,7 @@ import PrivateRoute  from "./util/security";
 
 export const router = createBrowserRouter([
   {
-    path: "/login",
+    path: "/",
     element: <Login/>
   },
   {

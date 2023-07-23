@@ -50,22 +50,31 @@ export function ProductsDetais(){
 
     return(
         <Container>
-              <section className="w-full bg-white rounded-lg">
-              <img
-                className="w-full rounded-lg mb-2 max-h-72 hover:scale-105 transtition-all"
-                src={formData.thumbnail}
-                />
-            <p className="font-bold mt-1 mb-2 px-2">{formData.title}</p>
-            <div className="flex flex-col px-2">
-              <span className="text-zinc-700 mb-06">{formData.description}</span>
-              <strong className="text-black font-medium text-xl">{Intl.NumberFormat('pt-PT', { style: 'currency', currency: 'EUR' }).format(formData.price)}</strong>
-              <span>Desconto: {formData.discountPercentage} %</span>
-            </div>
-            <div className="w-full h-px bg-slate-200 my-2"></div>
-            <div className="px-2 pb-2">
-              <span className="text-black">Marca: {formData.brand}</span>
-            </div>
-          </section>
+              <div className="max-w-lg rounded overflow-hidden shadow-lg">
+                <img 
+                   src={formData.thumbnail}
+                   alt={formData.title}
+                  className="w-full"/>
+                <div className="px-6 py-4">
+                  <div className="font-bold text-xl mb-2">{formData.title}</div>
+                  <p className="text-gray-700 text-base">{formData.description}</p>
+                  <strong>{ Intl.NumberFormat('pt-PT', { style: 'currency', currency: 'EUR' }).format(formData.price)}</strong>
+                </div>
+                <div className="px-6 pt-4 pb-2">
+                  <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">
+                    #{formData.brand}
+                  </span>
+                  <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">
+                    #Avaliação {formData.rating}
+                  </span>
+                  <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">
+                    #Desconto: {formData.discountPercentage} %
+                  </span>
+                  <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">
+                    #Stock: {formData.stock} 
+                  </span>
+                </div>
+             </div>
       </Container>
     )
 }
