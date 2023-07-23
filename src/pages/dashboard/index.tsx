@@ -119,7 +119,7 @@ export function Dashboard() {
       <main className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
         {products.map((product) => (
           <section key={product.id} className="w-full bg-white rounded-lg">
-            <Link to="/product">
+             <Link to={`/product/${product.id}`}>
               <img
                 className="w-full rounded-lg mb-2 max-h-72 hover:scale-105 transtition-all"
                 src={product.thumbnail}

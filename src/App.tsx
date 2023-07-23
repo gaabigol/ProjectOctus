@@ -5,7 +5,7 @@ import { NewProduct } from "./pages/dashboard/new";
 import { ProductsDetais } from "./pages/products";
 import { Layout } from "./components/layout"
 import { UpdateProduct } from "./pages/dashboard/productsupdate";
-
+import PrivateRoute  from "./util/security";
 
 export const router = createBrowserRouter([
   {
@@ -13,14 +13,18 @@ export const router = createBrowserRouter([
     element: <Login/>
   },
   {
-    element: <Layout/>,
+    element: (
+      <PrivateRoute>
+        <Layout/>
+      </PrivateRoute>
+    ),
     children: [
       {
-        path: "/",
+        path: "/dashboard",
         element: <Dashboard/>
       },
       {
-        path:"/product",
+        path:"/product/:productId",
         element: <ProductsDetais/>
       }, 
       {
@@ -33,6 +37,5 @@ export const router = createBrowserRouter([
       }
     ]
   },
-  
 ])
 

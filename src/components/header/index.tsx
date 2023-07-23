@@ -1,23 +1,24 @@
 import { Link } from 'react-router-dom'
 import { FiLogIn} from 'react-icons/fi'
+import { useNavigate } from 'react-router-dom'
 
 export function Header(){
-    const signed = false;
-    const loadingAuth = false;
+    const nav = useNavigate();
 
+    const handleLogout = () => {
+        localStorage.removeItem('token');
+        nav('/login');
+      }
+   
     return(
-
         <div className="w-full flex items-center justify-center h-16 bg-white drop-shadow mb-4">
             <head className=" flex w-full max-w 7xl items center justify-between px-4 mx-auto">
-                <Link to="/" className="font-bold">
+                <Link to="/dashboard" className="font-bold">
                 <p>OCTUS LLC</p>
                 </Link>
-
-                { !loadingAuth && !signed && (
-                    <Link to="/login">
-                        <FiLogIn size={24} color="#000"></FiLogIn>
-                    </Link>
-                )}
+                <button onClick={handleLogout}>
+                    <FiLogIn size={24} color="#000"></FiLogIn>
+                </button>
             </head>
         </div>
     )
