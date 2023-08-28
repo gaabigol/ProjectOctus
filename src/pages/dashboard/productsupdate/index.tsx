@@ -16,7 +16,6 @@ interface FormData {
 }
 
 //página para atualizar os produtos
-
 export function UpdateProduct() {
   const [formData, setFormData] = useState<FormData>({
     title: "",
@@ -29,9 +28,10 @@ export function UpdateProduct() {
     thumbnail: "",
     description: "",
   });
+
   const { productId } = useParams<{ productId: string }>();
 
-
+  //
   async function handleSubmit(e: FormEvent) {
     e.preventDefault();
 

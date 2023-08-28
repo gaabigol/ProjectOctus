@@ -5,12 +5,13 @@ import { User } from "../../types/user";
 import { useNavigate } from "react-router-dom";
 
 
-//Criar Validação quando tiver tempo!!!
+
 export function Login(){
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const nav = useNavigate();
 
+    //
     async function handleSubmit(e: FormEvent){
         e.preventDefault();
         try {
@@ -21,8 +22,9 @@ export function Login(){
           } catch (err) {
             console.log("Erro durante a autenticação: ", err);
           }
-        }
+      }
     
+    //
     async function authenticate(username: string, password: string): Promise<User>{
         const response = await fetch('https://dummyjson.com/auth/login', {
           method: 'POST',
@@ -42,6 +44,8 @@ export function Login(){
       
         return data as User;
       }
+
+      //
     return(
         <Container>
             <div className="w-full min-h-screen flex justify-center items-center flex-col gap-4">

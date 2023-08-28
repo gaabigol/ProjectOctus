@@ -26,6 +26,7 @@ export function ProductsDetais(){
     thumbnail: "",
     description: "",
   });
+
   const { productId } = useParams<{ productId: string }>();
   useEffect(() => {
     fetch(`https://dummyjson.com/products/${productId}`)
@@ -45,8 +46,6 @@ export function ProductsDetais(){
     })
     .catch(error => console.error("Error:", error));
   }, [productId]);
-
-
 
     return(
         <Container>
